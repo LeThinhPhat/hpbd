@@ -1,38 +1,213 @@
-.App {
-  text-align: center;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+  background-size: 400%;
+  animation: gradientShift 15s ease infinite;
 }
 
-.App-logo {
-  height: 40vmin;
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.heart {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #ff1744, #d81b60);
+  position: relative;
+  transform: rotate(45deg);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.heart:hover {
+  transform: rotate(45deg) scale(1.2);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #ff1744, #d81b60);
+  border-radius: 50%;
+  position: absolute;
+}
+
+.heart::before {
+  top: -50px;
+  left: 0;
+}
+
+.heart::after {
+  left: -50px;
+  top: 0;
+}
+
+.sparkle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.8) 10%,
+    transparent 60%
+  );
+  animation: sparkle 1.5s infinite;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.hpbd-text {
+  margin-top: 20px;
+  font-size: 2.8rem;
+  color: #ffffff;
+  animation: fadeIn 1s ease-in-out forwards, pulse 2s infinite;
+  opacity: 0;
+  text-align: center;
+  font-weight: 700;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
 }
 
-.App-link {
-  color: #61dafb;
+.date-highlight {
+  font-size: 3rem;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+@keyframes fadeIn {
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.pet-container {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.pet-image {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 20px;
+  animation: bounce 1.5s infinite;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  border: 3px solid #ffeb3b;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.bubble-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.bubble {
+  position: absolute;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.1) 60%
+  );
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  animation: float 5s linear infinite;
+  opacity: 0.7;
+}
+
+.bubble-1 {
+  width: 40px;
+  height: 40px;
+  left: 15%;
+  animation-delay: 0s;
+}
+.bubble-2 {
+  width: 60px;
+  height: 60px;
+  left: 40%;
+  animation-delay: 1s;
+}
+.bubble-3 {
+  width: 50px;
+  height: 50px;
+  left: 65%;
+  animation-delay: 2s;
+}
+.bubble-4 {
+  width: 45px;
+  height: 45px;
+  left: 85%;
+  animation-delay: 3s;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0.7;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20vh);
+    opacity: 0;
   }
 }
