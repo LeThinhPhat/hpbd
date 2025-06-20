@@ -11,9 +11,6 @@ function App() {
     height: window.innerHeight,
   });
   const [showConfetti, setShowConfetti] = useState(false);
-  const [showImage, setShowImage] = useState(false);
-  const [showHeartLeaves, setShowHeartLeaves] = useState(false);
-  const [showFormedHeart, setShowFormedHeart] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,34 +32,17 @@ function App() {
     }
   };
 
-  // Generate 100 balloons with random positions
+  // Generate 100 balloons with random positions across the entire screen
   const balloons = Array.from({ length: 100 }, (_, index) => ({
     id: index,
-    left: `${Math.random() * 90}%`,
-    top: `${Math.random() * 50 + 50}%`,
-  }));
-
-  // Generate 100 heart leaves with random initial positions
-  const heartLeaves = Array.from({ length: 100 }, (_, index) => ({
-    id: index,
-    left: `${50 + Math.random() * 20 - 10}%`, // Centered with some random spread
-    top: `${60 + Math.random() * 20}%`, // Start from middle of screen
-    delay: Math.random() * 2, // Random delay for wind effect
-    color: `hsl(${Math.random() * 360}, 70%, 70%)`, // Random colorful hues
+    left: `${Math.random() * 100}%`,
+    top: `${100}%`, // Start from the bottom
   }));
 
   useEffect(() => {
     if (isCorrect) {
-      const confettiTimer = setTimeout(() => setShowConfetti(true), 2000); // Balloons pop after 2s
-      const imageTimer = setTimeout(() => setShowImage(true), 4000); // Image appears after 4s
-      const heartLeavesTimer = setTimeout(() => setShowHeartLeaves(true), 6000); // Leaves blow away after 6s
-      const formedHeartTimer = setTimeout(() => setShowFormedHeart(true), 9000); // Heart forms after 9s
-      return () => {
-        clearTimeout(confettiTimer);
-        clearTimeout(imageTimer);
-        clearTimeout(heartLeavesTimer);
-        clearTimeout(formedHeartTimer);
-      };
+      const confettiTimer = setTimeout(() => setShowConfetti(true), 4000); // Balloons pop after 4s
+      return () => clearTimeout(confettiTimer);
     }
   }, [isCorrect]);
 
@@ -73,15 +53,16 @@ function App() {
           width={windowSize.width}
           height={windowSize.height}
           recycle={false}
-          numberOfPieces={500}
-          gravity={0.15}
+          numberOfPieces={1000}
+          gravity={0.1}
           colors={[
-            "#ffeb3b",
             "#ffeb3b",
             "#ff4081",
             "#00e676",
             "#3f51b5",
             "#e91e63",
+            "#ff69b4",
+            "#ff1493",
           ]}
         />
       )}
@@ -126,9 +107,7 @@ function App() {
       )}
       {isCorrect && (
         <>
-          <div className="hpbd-text">
-            Chúc Mừng Sinh Nhật Nguyễn Như Hiền 🎉🎂
-          </div>
+          <div className="hpbd-text">Chúc Mừng Sinh Nhật Như Hiền 🎉🎂</div>
           <div className="pet-container">
             {balloons.map((balloon) => (
               <div
@@ -137,34 +116,24 @@ function App() {
                 style={{ left: balloon.left, top: balloon.top }}
               ></div>
             ))}
-            {showImage &&
-              balloons.map((balloon) => (
-                <div
-                  key={`${balloon.id}-image`}
-                  className="balloon-image"
-                  style={{ left: balloon.left, top: balloon.top }}
-                >
-                  <img
-                    src="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-cho-26.jpg"
-                    alt="Bouncing Dog"
-                    className="pet-image"
-                  />
-                </div>
-              ))}
-            {showHeartLeaves &&
-              heartLeaves.map((leaf) => (
-                <div
-                  key={leaf.id}
-                  className="heart-leaf"
-                  style={{
-                    left: leaf.left,
-                    top: leaf.top,
-                    backgroundColor: leaf.color,
-                    animationDelay: `${leaf.delay}s`,
-                  }}
-                ></div>
-              ))}
-            {showFormedHeart && <div className="formed-heart"></div>}
+            {balloons.map((balloon) => (
+              <div
+                key={`${balloon.id}-image`}
+                className="balloon-image"
+                style={{ left: balloon.left, top: balloon.top }}
+              >
+                <img
+                  src="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/03/anh-meo-bua-50.jpg"
+                  alt="Bouncing Cat"
+                  className="pet-image"
+                />
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiPxcxq-GNmq67_M2bmGu1O9yflXwypbNQ2EL2K23NPD6kvj3ebHxubO76CgLPjTM7KLo&usqp=CAU"
+                  alt="Bouncing Cat"
+                  className="pet-image"
+                />
+              </div>
+            ))}
           </div>
         </>
       )}

@@ -5,20 +5,6 @@ body {
   height: 100%;
   font-family: "Poppins", sans-serif;
   background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
-  background-size: 400%;
-  animation: gradientShift 15s ease infinite;
-}
-
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 .container {
@@ -37,18 +23,7 @@ body {
   background: linear-gradient(135deg, #ff1744, #d81b60);
   position: relative;
   cursor: pointer;
-  transition: all 0.5s ease;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-}
-
-.gift-box:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
-}
-
-.gift-box.open {
-  transform: scale(1.1);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
 }
 
 .gift-lid {
@@ -58,12 +33,7 @@ body {
   position: absolute;
   top: -50px;
   left: -10px;
-  transition: transform 1s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.gift-box.open .gift-lid {
-  transform: translateY(-150px) rotateX(45deg);
 }
 
 .ribbon {
@@ -97,8 +67,6 @@ body {
   padding: 20px 30px;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 1s ease-in-out forwards;
-  backdrop-filter: blur(5px);
 }
 
 .question-text {
@@ -127,14 +95,6 @@ body {
   border: 2px solid transparent;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-}
-
-.question-input:focus {
-  outline: none;
-  border: 2px solid #ffeb3b;
-  box-shadow: 0 0 15px rgba(255, 235, 59, 0.5);
-  transform: scale(1.02);
 }
 
 .question-button {
@@ -148,13 +108,6 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.question-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(255, 235, 59, 0.5);
-  background: linear-gradient(135deg, #ff4081, #ffeb3b);
 }
 
 .error-text {
@@ -162,42 +115,44 @@ body {
   font-weight: 500;
   color: #ff6b6b;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-  animation: pulse 1.5s infinite;
 }
 
 .hpbd-text {
   font-size: 2.8rem;
-  color: #ffffff;
-  animation: fadeIn 1s ease-in-out forwards, pulse 2s infinite;
   text-align: center;
   font-weight: 700;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
+  animation: rainbowBlink 2s infinite;
 }
 
-.date-highlight {
-  font-size: 3rem;
-  color: #ffffff;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
+@keyframes rainbowBlink {
+  0% {
+    color: #ff0000;
   }
-}
-
-@keyframes pulse {
-  0%,
+  14% {
+    color: #ff8000;
+  }
+  28% {
+    color: #ffff00;
+  }
+  42% {
+    color: #00ff00;
+  }
+  57% {
+    color: #00ffff;
+  }
+  71% {
+    color: #0000ff;
+  }
+  85% {
+    color: #8000ff;
+  }
   100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.05);
+    color: #ff0000;
   }
 }
 
@@ -215,7 +170,7 @@ body {
   background: radial-gradient(circle at 50% 80%, #ff69b4, #ff1493);
   border-radius: 50% 50% 20% 20%;
   box-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
-  animation: floatAndPop 2s ease-out forwards;
+  animation: floatUp 4s ease-out forwards, pop 0.5s ease-out 3.5s forwards;
 }
 
 .balloon::after {
@@ -231,105 +186,35 @@ body {
 
 .balloon-image {
   position: absolute;
-  width: 60px;
-  height: 90px;
-  opacity: 0;
+  width: 100px;
+  height: 100px;
 }
 
 .pet-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0;
-  animation: popReveal 0.5s ease-out 4s forwards;
-}
-
-.heart-leaf {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  background: currentColor;
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  animation: windBlow 3s ease-out forwards 6s, formHeart 2s ease-in forwards 9s;
-  opacity: 1;
+  top: 0;
+  left: 0;
 }
 
-@keyframes windBlow {
+@keyframes floatUp {
   0% {
-    transform: translate(0, 0) scale(1);
+    transform: translateY(100%) scale(1);
+  }
+  100% {
+    transform: translateY(-20%) scale(1.1);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: translateY(-20%) scale(1.1);
     opacity: 1;
   }
-  70% {
-    transform: translate(calc(var(--x) * 100px), calc(var(--y) * -100px))
-      scale(0.5);
-    opacity: 0.5;
-  }
   100% {
-    transform: translate(calc(var(--x) * 150px), calc(var(--y) * -150px))
-      scale(0);
+    transform: translateY(-25%) scale(0);
     opacity: 0;
   }
-}
-
-@keyframes formHeart {
-  0% {
-    transform: translate(calc(var(--x) * 150px), calc(var(--y) * -150px))
-      scale(0);
-    opacity: 0;
-  }
-  100% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  }
-}
-
-.formed-heart {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  height: 300px;
-  background: rgba(255, 0, 0, 0.7);
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  animation: fadeInHeart 1s ease-out forwards 9s;
-  opacity: 0;
-  z-index: 5;
-}
-
-@keyframes fadeInHeart {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes floatAndPop {
-  0% {
-    transform: translateY(100vh) scale(1);
-  }
-  90% {
-    transform: translateY(-20vh) scale(1.1);
-  }
-  100% {
-    transform: translateY(-25vh) scale(0);
-    opacity: 0;
-  }
-}
-
-@keyframes popReveal {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.bubble-container {
-  display: none;
 }
