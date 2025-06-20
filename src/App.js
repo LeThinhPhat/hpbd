@@ -10,6 +10,10 @@ function App() {
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showImage, setShowImage] = useState(false);
+  const [showHeartLeaves, setShowHeartLeaves] = useState(false);
+  const [showFormedHeart, setShowFormedHeart] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,9 +35,40 @@ function App() {
     }
   };
 
+  // Generate 100 balloons with random positions
+  const balloons = Array.from({ length: 100 }, (_, index) => ({
+    id: index,
+    left: `${Math.random() * 90}%`,
+    top: `${Math.random() * 50 + 50}%`,
+  }));
+
+  // Generate 100 heart leaves with random initial positions
+  const heartLeaves = Array.from({ length: 100 }, (_, index) => ({
+    id: index,
+    left: `${50 + Math.random() * 20 - 10}%`, // Centered with some random spread
+    top: `${60 + Math.random() * 20}%`, // Start from middle of screen
+    delay: Math.random() * 2, // Random delay for wind effect
+    color: `hsl(${Math.random() * 360}, 70%, 70%)`, // Random colorful hues
+  }));
+
+  useEffect(() => {
+    if (isCorrect) {
+      const confettiTimer = setTimeout(() => setShowConfetti(true), 2000); // Balloons pop after 2s
+      const imageTimer = setTimeout(() => setShowImage(true), 4000); // Image appears after 4s
+      const heartLeavesTimer = setTimeout(() => setShowHeartLeaves(true), 6000); // Leaves blow away after 6s
+      const formedHeartTimer = setTimeout(() => setShowFormedHeart(true), 9000); // Heart forms after 9s
+      return () => {
+        clearTimeout(confettiTimer);
+        clearTimeout(imageTimer);
+        clearTimeout(heartLeavesTimer);
+        clearTimeout(formedHeartTimer);
+      };
+    }
+  }, [isCorrect]);
+
   return (
     <div className="container">
-      {isCorrect && (
+      {isCorrect && showConfetti && (
         <Confetti
           width={windowSize.width}
           height={windowSize.height}
@@ -95,23 +130,41 @@ function App() {
             Chúc Mừng Sinh Nhật Nguyễn Như Hiền 🎉🎂
           </div>
           <div className="pet-container">
-            <img
-              src="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-cho-26.jpg"
-              alt="Bouncing Dog"
-              className="pet-image"
-            />
-            <img
-              src="https://i.pinimg.com/736x/b1/8a/c5/b18ac5e4327e9f4c166295e7444db884.jpg"
-              alt="Bouncing Cat"
-              className="pet-image"
-            />
-          </div>
-          <div className="bubble-container">
-            <div className="bubble bubble-1"></div>
-            <div className="bubble bubble-2"></div>
-            <div className="bubble bubble-3"></div>
-            <div className="bubble bubble-4"></div>
-            <div className="bubble bubble-5"></div>
+            {balloons.map((balloon) => (
+              <div
+                key={balloon.id}
+                className="balloon"
+                style={{ left: balloon.left, top: balloon.top }}
+              ></div>
+            ))}
+            {showImage &&
+              balloons.map((balloon) => (
+                <div
+                  key={`${balloon.id}-image`}
+                  className="balloon-image"
+                  style={{ left: balloon.left, top: balloon.top }}
+                >
+                  <img
+                    src="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-cho-26.jpg"
+                    alt="Bouncing Dog"
+                    className="pet-image"
+                  />
+                </div>
+              ))}
+            {showHeartLeaves &&
+              heartLeaves.map((leaf) => (
+                <div
+                  key={leaf.id}
+                  className="heart-leaf"
+                  style={{
+                    left: leaf.left,
+                    top: leaf.top,
+                    backgroundColor: leaf.color,
+                    animationDelay: `${leaf.delay}s`,
+                  }}
+                ></div>
+              ))}
+            {showFormedHeart && <div className="formed-heart"></div>}
           </div>
         </>
       )}
